@@ -28,6 +28,8 @@ type Telegram struct {
 	Header   string
 	Version  string    // Version information for P1 output.
 	DateTime time.Time // Date-time stamp of the P1 message.
+
+	DataObjects map[string]DataObject
 }
 
 // DataObject represent data object and it's reference to the OBIS as defined
@@ -37,10 +39,13 @@ type Telegram struct {
 type DataObject struct {
 	OBIS  string // OBIS reduced ID-code
 	Value string
+	Unit  string
 }
 
 // ParseTelegram will parse the DSMR telegram.
 func ParseTelegram(telegram string) (t Telegram, err error) {
+	t.DataObjects = make(map[string]DataObject)
+
 	for _, line := range strings.Split(telegram, "\n") {
 		line = strings.TrimSpace(line)
 
@@ -62,9 +67,10 @@ func ParseTelegram(telegram string) (t Telegram, err error) {
 		}
 
 		switch do.OBIS {
-		// Version information for P1 output
+		// Version information for P1 output.
 		case "1-3:0.2.8":
 			t.Version = do.Value
+		// Date time of P1 output.
 		case "0-0:1.0.0":
 			if len(do.Value) > 2 {
 				// Remove the DST indicator from the timestamp
@@ -82,23 +88,41 @@ func ParseTelegram(telegram string) (t Telegram, err error) {
 				t.DateTime = dateTime
 			}
 		default:
-			continue
+			t.DataObjects[do.OBIS] = do
 		}
 	}
 	return t, nil
 }
 
+// ParseDataObject will parse a single line into a DataObject.
 func ParseDataObject(do string) (DataObject, error) {
+	// Extract the OBIS reduced ID-code and the corresponding value, e.g:
+	// 1-3:0.2.8(50) --> 1-3:0.2.8 and (50)
 	match := objectRegexp.FindStringSubmatch(strings.TrimSpace(do))
 	if match == nil || len(match) < 3 {
 		return DataObject{}, fmt.Errorf("no valid DSMR object found")
 	}
-
 	obis := match[1]
-	value := match[2]
+	rawValue := match[2]
 
+	// Extract the value and the unit from the raw value, e.g:
+	// (000099.999*kWh) -> 000099.999 and kWh
+	match = valueRegexp.FindStringSubmatch(rawValue)
+	if match == nil {
+		return DataObject{
+			OBIS:  obis,
+			Value: rawValue,
+		}, nil
+	}
+	if len(match) > 2 {
+		return DataObject{
+			OBIS:  obis,
+			Value: match[1],
+			Unit:  match[2],
+		}, nil
+	}
 	return DataObject{
 		OBIS:  obis,
-		Value: value,
+		Value: match[1],
 	}, nil
 }
