@@ -27,3 +27,7 @@ import "github.com/roaldnefs/go-dsmr"
 ## Resources
 
 - [DSMR Technical Description](https://www.netbeheernederland.nl/_upload/Files/Slimme_meter_15_a727fce1f1.pdf)
+
+## Authors
+
+go-dsmr is heavily based on [GotSmart](https://github.com/basvdlei/gotsmart) with the modified work by [Roald Nefs](https://github.com/roaldnefs). [GotSmart](https://github.com/basvdlei/gotsmart) is created by [Bas van der Lei](https://github.com/basvdlei).
