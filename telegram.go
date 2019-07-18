@@ -32,6 +32,54 @@ type Telegram struct {
 	DataObjects map[string]DataObject
 }
 
+// InstantaneousVoltageL1 returns the instantaneous voltage L1 in V resolution.
+func (t Telegram) InstantaneousVoltageL1() (string, bool) {
+	if do, ok := t.DataObjects["1-0:32.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
+// InstantaneousVoltageL2 returns the instantaneous voltage L3 in V resolution.
+func (t Telegram) InstantaneousVoltageL2() (string, bool) {
+	if do, ok := t.DataObjects["1-0:52.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
+// InstantaneousVoltageL3 returns the instantaneous voltage L3 in V resolution.
+func (t Telegram) InstantaneousVoltageL3() (string, bool) {
+	if do, ok := t.DataObjects["1-0:72.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
+// InstantaneousCurrentL1 returns the instantaneous current L1 in A resolution.
+func (t Telegram) InstantaneousCurrentL1() (string, bool) {
+	if do, ok := t.DataObjects["1-0:31.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
+// InstantaneousCurrentL2 returns the instantaneous current L2 in A resolution.
+func (t Telegram) InstantaneousCurrentL2() (string, bool) {
+	if do, ok := t.DataObjects["1-0:51.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
+// InstantaneousCurrentL3 returns the instantaneous current L3 in A resolution.
+func (t Telegram) InstantaneousCurrentL3() (string, bool) {
+	if do, ok := t.DataObjects["1-0:71.7.0"]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
 // DataObject represent data object and it's reference to the OBIS as defined
 // in EN-EN-IEC 62056-61:2002 Electricity metering – Data exchange for meter
 // reading, tariff and load control – Part 61: OBIS Object Identification
