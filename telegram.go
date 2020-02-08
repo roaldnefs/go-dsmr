@@ -20,7 +20,7 @@ var (
 	objectRegexp = regexp.MustCompile("([0-9]+-[0-9]+:[0-9]+.[0-9]+.[0-9]+)\\((.*)\\)")
 	// Value and unit
 	// In the DSMR the unit is optional
-	valueRegexp = regexp.MustCompile("([^*]+)\\*?(.*)")
+	valueRegexp = regexp.MustCompile(`((.*)\)\()?(.*)\*(.*)`)
 )
 
 // Telegram represent a single DSMR P1 message.
@@ -229,12 +229,24 @@ func (t Telegram) InstantaneousCurrentL3() (string, bool) {
 	return "", false
 }
 
+// MeterReadingGasDeliveredToClient returns the meter reading gas delivered to
+// client in m3 with a mm3 resolution for the gas meter that is installed on 
+// the given channel.
+func (t Telegram) MeterReadingGasDeliveredToClient(channel int) (string, bool) {
+	identifier := fmt.Sprintf("0-%d:24.2.1", channel)
+	if do, ok := t.DataObjects[identifier]; ok {
+		return do.Value, true
+	}
+	return "", false
+}
+
 // DataObject represent data object and it's reference to the OBIS as defined
 // in EN-EN-IEC 62056-61:2002 Electricity metering – Data exchange for meter
 // reading, tariff and load control – Part 61: OBIS Object Identification
 // System.
 type DataObject struct {
 	OBIS  string // OBIS reduced ID-code
+	Timestamp string
 	Value string
 	Unit  string
 }
@@ -311,15 +323,10 @@ func ParseDataObject(do string) (DataObject, error) {
 			Value: rawValue,
 		}, nil
 	}
-	if len(match) > 2 {
-		return DataObject{
-			OBIS:  obis,
-			Value: match[1],
-			Unit:  match[2],
-		}, nil
-	}
 	return DataObject{
 		OBIS:  obis,
-		Value: match[1],
+		Timestamp: match[2],
+		Value: match[3],
+		Unit:  match[4],
 	}, nil
 }
