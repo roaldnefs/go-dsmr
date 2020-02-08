@@ -230,7 +230,7 @@ func (t Telegram) InstantaneousCurrentL3() (string, bool) {
 }
 
 // MeterReadingGasDeliveredToClient returns the meter reading gas delivered to
-// client in m3 with a mm3 resolution for the gas meter that is installed on 
+// client in m3 with a mm3 resolution for the gas meter that is installed on
 // the given channel.
 func (t Telegram) MeterReadingGasDeliveredToClient(channel int) (string, bool) {
 	identifier := fmt.Sprintf("0-%d:24.2.1", channel)
@@ -245,10 +245,10 @@ func (t Telegram) MeterReadingGasDeliveredToClient(channel int) (string, bool) {
 // reading, tariff and load control – Part 61: OBIS Object Identification
 // System.
 type DataObject struct {
-	OBIS  string // OBIS reduced ID-code
+	OBIS      string // OBIS reduced ID-code
 	Timestamp string
-	Value string
-	Unit  string
+	Value     string
+	Unit      string
 }
 
 // ParseTelegram will parse the DSMR telegram.
@@ -324,9 +324,9 @@ func ParseDataObject(do string) (DataObject, error) {
 		}, nil
 	}
 	return DataObject{
-		OBIS:  obis,
+		OBIS:      obis,
 		Timestamp: match[2],
-		Value: match[3],
-		Unit:  match[4],
+		Value:     match[3],
+		Unit:      match[4],
 	}, nil
 }
