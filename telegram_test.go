@@ -1,7 +1,7 @@
 package dsmr_test
 
 import (
-	"github.com/roaldnefs/go-dsmr"
+	"github.com/legolasbo/go-dsmr"
 	"testing"
 )
 
