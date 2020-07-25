@@ -1,4 +1,4 @@
-[![Travis CI](https://img.shields.io/travis/roaldnefs/go-dsmr.svg?style=for-the-badge)](https://travis-ci.org/roaldnefs/go-dsmr)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/roaldnefs/go-dsmr/go?label=TEST&logoColor=%23FFF&style=for-the-badge)](https://github.com/roaldnefs/go-dsmr/actions?query=workflow%3Ago)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/roaldnefs/go-dsmr)
 [![GitHub](https://img.shields.io/github/license/roaldnefs/go-dsmr.svg?style=for-the-badge)](https://github.com/roaldnefs/go-dsmr/blob/master/LICENSE)
 
