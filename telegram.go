@@ -114,8 +114,10 @@ func (t Telegram) NumberOfLongPowerFailuresInAnyPhase() (string, bool) {
 }
 
 // TODO update regex so it will match:
-//   None: 1-0:99.97.0()
-//   Two: 1-0:99.97.0(2)(0-0:96.7.19)(101208152415W)(0000000240*s)(101208151004W)(0000000301*s)
+//
+//	None: 1-0:99.97.0()
+//	Two: 1-0:99.97.0(2)(0-0:96.7.19)(101208152415W)(0000000240*s)(101208151004W)(0000000301*s)
+//
 // PowerFailureEventLog returns the power failure event log (long power
 // failures).
 func (t Telegram) PowerFailureEventLog() (string, bool) {
