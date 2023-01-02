@@ -15,7 +15,7 @@
             alt="GitHub - License">
     </a>
     <a href="https://github.com/roaldnefs/go-dsmr/actions">
-        <img src="https://img.shields.io/github/workflow/status/roaldnefs/go-dsmr/go?style=for-the-badge&color=blue"
+        <img src="https://img.shields.io/github/actions/workflow/status/roaldnefs/go-dsmr/go.yml?style=for-the-badge&color=blue"
             alt="GitHub Workflow Status">
     </a>
     <a href="https://github.com/roaldnefs/go-dsmr/graphs/contributors">
